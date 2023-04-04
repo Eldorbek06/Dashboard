@@ -74,9 +74,10 @@ header .left input {
 .show_type span {
     font-weight: 600;
     font-size: 14px;
+    white-space: nowrap;
 }
 
-.show_type span:hover {
+.show_type :not(:first-child):hover {
     color: #007FFF;
 }
 
@@ -124,6 +125,10 @@ header .left input {
     white-space: nowrap;
 }
 
+.tasks .tasks_list .task .state{
+    padding-left: 10px;
+}
+
 .tasks .tasks_list .task {
     padding: 19px 0;
     display: flex;
@@ -146,13 +151,21 @@ header .left input {
     display: none;
 }
 
+.tasks.tile .tasks_list{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    gap: 24px;
+}
+
 .tasks.tile .tasks_list .task * {
     width: fit-content;
     margin: 0;
+    padding: 0;
 }
 
 .tile .tasks_list .task {
-    width: 350px;
     flex-direction: column;
     gap: 14px;
     background: #FFFFFF;
@@ -165,12 +178,16 @@ header .left input {
     font-size: 20px;
 }
 
-.tile .tasks_list .task .desrc {
+.tile .tasks_list .task .descr {
     color: #A5A5B4;
 }
 
 .tile .tasks_list .task .date {
     margin-right: 26px;
+}
+
+.tile .tasks_list .task .date_time{
+    margin-top: 5px;
 }
 
 
@@ -182,22 +199,30 @@ header .left input {
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
     opacity: 0;
     visibility: hidden;
     transition: .8s ease-out;
 }
 
+.popup .close_area{
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .popup .popup_content {
     position: relative;
-    top: 50%;
+    top: -50%;
     left: 50%;
-    transform: translate(-50%, -100%);
+    translate: -50% -50%;
     padding: 56px 97px;
     width: 630px;
     background: #FFFFFF;
     border-radius: 10px;
-    z-index: 2;
+    z-index: 5;
     opacity: 0;
     visibility: hidden;
     scale: 0;
@@ -236,6 +261,12 @@ header .left input {
     border-radius: 10px;
     color: white;
     border: none !important;
+    transition: .2s;
+    cursor: pointer;
+}
+
+.popup .popup_content form button:hover{
+    background: #0080fff3;
 }
 
 .popup_act{
@@ -244,7 +275,7 @@ header .left input {
 }
 
 .popup_act .popup_content{
-    transform: translate(-50%, -50%);
+    top: 50%;
     visibility: visible;
     opacity: 1;
     scale: 1;

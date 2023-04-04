@@ -24,10 +24,10 @@
 
         <main>
             <div class="show_type">
-                <span>Показать задачи как:</span><span class="table">Таблица</span><span class="tile">Плитка</span>
+                <span>Показать задачи как:</span><span class="table_type">Таблица</span><span class="tile_type">Плитка</span>
             </div>
 
-            <div class="tasks tile">
+            <div class="tasks">
                 <nav>
                     <p>Заголовок задачи</p>
                     <p>Описание задачи</p>
@@ -35,31 +35,21 @@
                     <p>Время</p>
                     <p>Выполнено</p>
                 </nav>
-                <div class="tasks_list">
-                    <div class="task">
-                        <h3 class="title">Lorem ipsum dolor sit amet.</h3>
-                        <p class="desrc">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur corporis
-                            perspiciatis nesciunt esse unde natus rem ipsam, neque dignissimos doloremque!</p>
-                        <div class="date_time">
-                            <div class="date">21.10.21</div>
-                            <div class="time">14:31</div>
-                        </div>
-                        <div class="state">Не выполнено</div>
-                    </div>
-                </div>
+                <div class="tasks_list"></div>
             </div>
         </main>
     </div>
 
     <div class="popup">
+        <div class="close_area"></div>
         <div class="popup_content">
             <div class="title">Добавить</div>
             <form name="popup_form">
-                <input class="box" type="text" placeholder="Заголовок">
-                <input class="box" type="text" placeholder="Описание">
-                <input class="box" type="time" placeholder="Время">
-                <input class="box" type="date" placeholder="Дата">
-                <select class="box">
+                <input name="title" class="box" type="text" placeholder="Заголовок">
+                <input name="descr" class="box" type="text" placeholder="Описание">
+                <input name="time" class="box" type="time" placeholder="Время">
+                <input name="date" class="box" type="date" placeholder="Дата">
+                <select name="state" class="box">
                     <option value="new">new</option>
                     <option value="progress">progress</option>
                     <option value="done">done</option>
