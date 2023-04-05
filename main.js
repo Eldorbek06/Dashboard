@@ -9,21 +9,23 @@ let tile_view = document.querySelector('.show_type .tile_type')
 let tasks = document.querySelector('.tasks')
 let inps = form.querySelectorAll('input')
 let searchInp = document.querySelector('header .left input')
+let delete_btn = form.querySelector('.delete')
+let obj = {}
 
 searchInp.onkeyup = () => {
     let key = searchInp.value.trim().toLowerCase()
     let data = []
     fetch(B_url)
-    .then(res => res.json())
-    .then(res => {
-        res.filter(el => {
-            let title = el.title.toLowerCase()
-            if(title.includes(key)){
-                data.push(el)
-            }
+        .then(res => res.json())
+        .then(res => {
+            res.filter(el => {
+                let title = el.title.toLowerCase()
+                if (title.includes(key)) {
+                    data.push(el)
+                }
+            })
         })
-    })
-    .then(() => reload(data, tasks_list))
+        .then(() => reload(data, tasks_list))
 }
 
 showTypeColor()
@@ -41,7 +43,6 @@ closeBtn.onclick = () => modalToggle()
 form.onsubmit = (e) => {
     e.preventDefault()
     let count = 0
-    let obj = {}
     let fm = new FormData(form)
     fm.forEach((v, k) => {
         if (v === '') {
@@ -54,15 +55,24 @@ form.onsubmit = (e) => {
     if (count < 4) {
         inps.forEach(el => el.value === '' ? el.style.borderColor = 'red' : el.style.borderColor = 'black')
         return
-    } else {
+    }
+    if (delete_btn.classList.contains('unVisible')) {
         fetch(B_url, {
             method: "POST",
             body: JSON.stringify(obj),
             headers: { "Content-Type": "application/json" }
         }).then(() => reFetch())
         modalToggle()
+        form.reset()
+    } else {
+        fetch(`${B_url}/${obj.id}`, {
+            method: "PATCH",
+            body: JSON.stringify(obj),
+            headers: { "Content-Type": "application/json" }
+        }).then(() => reFetch())
+        modalToggle()
+        form.reset()
     }
-    // form.reset()
 }
 
 function reload(arr, place) {
@@ -100,13 +110,35 @@ function reload(arr, place) {
         place.append(task)
         task.append(title, descr, date_time, state)
         date_time.append(date, time)
+
+        task.onclick = () => {
+            delete_btn.classList.remove('unVisible')
+            form.elements.date.value = item.date
+            form.elements.time.value = item.time
+            form.elements.title.value = item.title
+            form.elements.descr.value = item.descr
+            obj.id = item.id
+            modalToggle()
+
+            delete_btn.onclick = () => {
+                modalToggle()
+                fetch(`${B_url}/${item.id}`, {
+                    method: "DELETE"
+                }).then(() => reFetch())
+            }
+        }
     }
 }
 
 reFetch()
 
 function modalToggle() {
-    popup.classList.contains('popup_act') ? popup.classList.remove('popup_act') : popup.classList.add('popup_act')
+    if (popup.classList.contains('popup_act')) {
+        popup.classList.remove('popup_act')
+        delete_btn.classList.add('unVisible')
+        form.reset()
+        inps.forEach(el => el.style.borderColor = 'black')
+    } else { popup.classList.add('popup_act') }
 }
 function reFetch() { fetch(B_url).then(res => res.json()).then(res => reload(res, tasks_list)) }
 

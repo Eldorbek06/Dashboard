@@ -136,9 +136,22 @@ header .left input {
     justify-content: start;
     border-bottom: 1px solid #c4c4c4;
 }
-
+ 
 .tasks .tasks_list .task .date_time {
-    display: flex;
+    position: relative;
+}
+
+.tasks .tasks_list .task .date_time .date{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.tasks .tasks_list .task .date_time .time{
+    position: absolute;
+    top: 0;
+    left: 260%;
+    width: 0;
 }
 
 .tasks .tasks_list .task .state {
@@ -182,12 +195,12 @@ header .left input {
     color: #A5A5B4;
 }
 
-.tile .tasks_list .task .date {
-    margin-right: 26px;
+.tile .tasks_list .task .date_time{
+    margin: 5px 0 10px;
 }
 
-.tile .tasks_list .task .date_time{
-    margin-top: 5px;
+.tile .tasks_list .task .date_time .time{
+    left: 80px;
 }
 
 
@@ -254,19 +267,27 @@ header .left input {
     appearance: none;
 }
 
-.popup .popup_content form button {
+.popup .popup_content form .btn {
     font-weight: 600;
     font-size: 18px;
     background: #0047FF;
-    border-radius: 10px;
     color: white;
     border: none !important;
     transition: .2s;
     cursor: pointer;
+    text-align: center;
 }
 
 .popup .popup_content form button:hover{
     background: #0080fff3;
+}
+
+.popup .popup_content .delete.btn{
+    background: red;
+}
+
+.popup .popup_content .delete.btn:hover{
+    background: rgba(255, 0, 0, 0.8);
 }
 
 .popup_act{
@@ -279,4 +300,8 @@ header .left input {
     visibility: visible;
     opacity: 1;
     scale: 1;
+}
+
+.unVisible{
+    display: none;
 }
